@@ -1,0 +1,227 @@
+openapi: 3.0.0
+info:
+  title: Tensor school API
+  description: Проект для школы тензор
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/Bzigg/tensor-school/1.0.0
+  description: SwaggerHub API Auto Mocking
+paths:
+  /api/student/auth:
+    post:
+      summary: Информация о студенте
+      operationId: api_student_auth_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/student_auth_body'
+      responses:
+        "200":
+          description: получаем информацию о студенте
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "422":
+          description: ошибки авторизации
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_422'
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+  /api/student/add:
+    post:
+      summary: запись на курс
+      operationId: api_student_add_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/student_add_body'
+      responses:
+        "200":
+          description: успешно записались
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+        "404":
+          description: ошибки записи
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+  /api/teatcher/auth:
+    post:
+      summary: Информация о преподавателе
+      operationId: api_teatcher_auth_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/teatcher_auth_body'
+      responses:
+        "200":
+          description: получаем информацию о преподавателе
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+        "422":
+          description: ошибки авторизации
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_422'
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+components:
+  schemas:
+    student_auth_body:
+      properties:
+        email:
+          type: string
+          example: user@user.ru
+        password:
+          type: string
+          example: qwerty123
+    inline_response_200:
+      properties:
+        student:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            email:
+              type: string
+              example: user@user.ru
+            name:
+              type: string
+              example: Nikita
+            course_list:
+              type: array
+              items:
+                type: integer
+                format: int64
+                example: 1
+            access:
+              type: string
+              example: student
+          example:
+            access: student
+            name: Nikita
+            id: 1
+            course_list:
+            - 1
+            - 1
+            email: user@user.ru
+      example:
+        student:
+          access: student
+          name: Nikita
+          id: 1
+          course_list:
+          - 1
+          - 1
+          email: user@user.ru
+    inline_response_422:
+      properties:
+        errors:
+          type: object
+          properties:
+            email:
+              type: string
+              example: не указан email
+            password:
+              type: string
+              example: не указан password
+    student_add_body:
+      properties:
+        student_id:
+          type: integer
+          format: int64
+          example: 1
+        course_id:
+          type: integer
+          format: int64
+          example: 2
+        phone:
+          type: integer
+          format: int64
+          example: 9171234567
+    inline_response_200_1:
+      properties:
+        student_id:
+          type: integer
+          format: int64
+          example: 1
+        course_id:
+          type: integer
+          format: int64
+          example: 2
+        status:
+          type: boolean
+          example: true
+      example:
+        course_id: 2
+        student_id: 1
+        status: true
+    inline_response_404:
+      properties:
+        errors:
+          type: object
+          properties:
+            course:
+              type: string
+              example: курс не найден
+    teatcher_auth_body:
+      properties:
+        email:
+          type: string
+          example: user@user.ru
+        password:
+          type: string
+          example: qwerty123
+    inline_response_200_2:
+      properties:
+        student:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            email:
+              type: string
+              example: user@user.ru
+            name:
+              type: string
+              example: Nikita
+            course_list:
+              type: array
+              items:
+                type: integer
+                format: int64
+                example: 1
+            access:
+              type: string
+              example: teatcher
+          example:
+            access: teatcher
+            name: Nikita
+            id: 1
+            course_list:
+            - 1
+            - 1
+            email: user@user.ru
+      example:
+        student:
+          access: teatcher
+          name: Nikita
+          id: 1
+          course_list:
+          - 1
+          - 1
+          email: user@user.ru
+
