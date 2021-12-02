@@ -10,5 +10,12 @@ function createModalWindow(event) {
 }
 
 const btnSingUp = document.querySelector('.btn-signUp');
-btnSingUp.addEventListener('click', createModalWindow);
+if (btnSingUp) {
+    btnSingUp.addEventListener('click', createModalWindow);
+}
+
+const btnSingUpIndex = document.querySelector('.btn.btn-primary.link');
+if (btnSingUpIndex) {
+    btnSingUpIndex.addEventListener('click', createModalWindow);
+}
 
